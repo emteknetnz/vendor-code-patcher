@@ -1,0 +1,21 @@
+{
+    "name": "emteknetnz/vendor-code-patcher",
+    "description": "Vendor code patcher",
+    "type": "silverstripe-vendormodule",
+    "require": {
+        "silverstripe/framework": "^4.9"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "emteknetnz\\VendorCodePatcher\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Steve Boyd",
+            "email": "emteknetnz@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
