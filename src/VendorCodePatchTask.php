@@ -14,20 +14,23 @@ class VendorCodePatchTask extends BuildTask
 
     public function run($request)
     {
-        $path = $this->getVendorPatchesPath();
-        foreach (scandir($path) as $account) {
-            if (!$this->assertDir("$path/$account")) {
+        $vendorPath = str_replace('//', '/', BASE_PATH . '/vendor');
+        $patchesPath = str_replace('//', '/', BASE_PATH . '/_vendor_patches');
+        foreach (scandir($patchesPath) as $account) {
+            if (!$this->assertDir("$patchesPath/$account")) {
                 continue;
             }
-            foreach (scandir("$path/$account") as $module) {
-                if (!$this->assertDir("$path/$account/$module")) {
+            foreach (scandir("$patchesPath/$account") as $module) {
+                if (!$this->assertDir("$patchesPath/$account/$module")) {
                     continue;
                 }
-                foreach (scandir("$path/$account/$module") as $patch) {
-                    if (!pathinfo("$path/$account/$module/$patch", PATHINFO_EXTENSION) == '.patch') {
+                foreach (scandir("$patchesPath/$account/$module") as $patch) {
+                    if (!pathinfo("$patchesPath/$account/$module/$patch", PATHINFO_EXTENSION) == '.patch') {
                         continue;
                     }
-                    echo shell_exec("patch -p1 -N -d vendor/$account/$module < $path/$account/$module/$patch");
+                    $p1 = "$vendorPath/$account/$module";
+                    $p2 = "$patchesPath/$account/$module/$patch";
+                    echo '<pre> ' . shell_exec("patch -p1 -N -d $p1 < $p2") . '</pre>';
                 }
             }
         }
@@ -36,10 +39,5 @@ class VendorCodePatchTask extends BuildTask
     private function assertDir($path)
     {
         return !preg_match('#/\.\.?$#', $path) && is_dir($path);
-    }
-
-    private function getVendorPatchesPath()
-    {
-        return str_replace('//', '/', BASE_PATH . '/_vendor_patches');
     }
 }
