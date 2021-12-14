@@ -24,3 +24,12 @@ git format-patch -1 [sha]
 ```
 
 This will generate a .patch file - copy this to correct directory in `_vendor_patches`
+
+
+## Applying the patch
+
+Login in to the CMS as admin
+
+/dev/tasks/VendorCodePatchTask
+
+In the future, functionality could be changed to be flushable and run on ?flush, so that it happens as part of deployment
