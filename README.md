@@ -4,7 +4,7 @@ Used to add private code patches directly to a private testing repo to bypass so
 
 Put your patches in BASE_PATH . '/_vendor_patches' so they match the modules they're in, e.g.
 
-[project_root]/_vendor_patches/silverstripe/framework/my.patch
+[project_root]/_vendor_patches/silverstripe/framework/0001-FIX-multiple-files-changed.patch
 
 ## Requirements
 
