@@ -30,7 +30,7 @@ class VendorCodePatchTask extends BuildTask
                     }
                     $p1 = "$vendorPath/$account/$module";
                     $p2 = "$patchesPath/$account/$module/$patch";
-                    echo '<pre> ' . shell_exec("patch -p1 -N -d $p1 < $p2") . '</pre>';
+                    echo '<pre> ' . shell_exec("patch -p1 -N -d $p1 < '$p2'") . '</pre>';
                 }
             }
         }
