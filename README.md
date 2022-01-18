@@ -10,7 +10,13 @@ Put your patches in BASE_PATH . '/_vendor_patches' so they match the modules the
 
 The webserver you are deploying to requires the `patch` utility available.  This will be available on the typical debian/ubuntu webserver.
 
-## Generating .patch files
+## Generating .patch files for GitHub pull requests
+
+Simply access the patch url for the pull-request
+
+https://patch-diff.githubusercontent.com/raw/silverstripe/silverstripe-admin/pull/1259.patch
+
+## Generating .patch files from local files
 
 Standard practice is to have a pull-request in a private repo for unreleased patches squashed down to a single commit.
 
@@ -23,18 +29,8 @@ git fetch my-private-account
 git format-patch -1 [sha]
 ```
 
-This will generate a .patch file - copy this to correct directory in `_vendor_patches`
-
 ## Applying patches
 
 Patches are automatically applied on ?flush=1 - this will happen as part of deployment
 
-The vendor-code-patcher will run on every flush, however it will only apply the patches on the first flush if the .patch file makes sense
-
-## TODO
-
-Support getting .patch files directly from github rather than from _vendor_patches - this will be helpful for running forks in non-standard CI setups
-
-Example:
-
-https://patch-diff.githubusercontent.com/raw/silverstripe/silverstripe-admin/pull/1259.patch
+The vendor-code-patcher will run on every flush, however it will only apply the patches on the first flush if the .patch file while any files do not have any patches applied.
