@@ -2,17 +2,14 @@
 
 namespace emteknetnz\VendorCodePatcher;
 
-use SilverStripe\Dev\BuildTask;
+use SilverStripe\Core\Flushable;
 
-class VendorCodePatchTask extends BuildTask
+/**
+ * Applies .patch files in the _vendor_patches directory to the modules in the vendor directory
+ */
+class Patcher implements Flushable
 {
-    private static $segment = 'VendorCodePatchTask';
-
-    protected $title = 'Vendor code patch task';
-
-    protected $description = 'Applies .patch files to the modules in the vendor directory';
-
-    public function run($request)
+    public static function flush()
     {
         $vendorPath = str_replace('//', '/', BASE_PATH . '/vendor');
         $patchesPath = str_replace('//', '/', BASE_PATH . '/_vendor_patches');
@@ -30,7 +27,9 @@ class VendorCodePatchTask extends BuildTask
                     }
                     $p1 = "$vendorPath/$account/$module";
                     $p2 = "$patchesPath/$account/$module/$patch";
-                    echo '<pre> ' . shell_exec("patch -p1 -N -d $p1 < '$p2'") . '</pre>';
+                    if (PHP_SAPI === 'cli') {
+                        echo '<pre> ' . shell_exec("patch -p1 -N -d $p1 < '$p2'") . '</pre>';
+                    }
                 }
             }
         }
