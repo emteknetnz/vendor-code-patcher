@@ -11,6 +11,7 @@ class Patcher implements Flushable
 {
     public static function flush()
     {
+        $this->log('Running vendor-code-patcher');
         $vendorPath = str_replace('//', '/', BASE_PATH . '/vendor');
         $patchesPath = str_replace('//', '/', BASE_PATH . '/_vendor_patches');
         foreach (scandir($patchesPath) as $account) {
@@ -27,12 +28,19 @@ class Patcher implements Flushable
                     }
                     $p1 = "$vendorPath/$account/$module";
                     $p2 = "$patchesPath/$account/$module/$patch";
-                    if (PHP_SAPI === 'cli') {
-                        echo '<pre> ' . shell_exec("patch -p1 -N -d $p1 < '$p2'") . '</pre>';
-                    }
+                    $res = shell_exec("patch -p1 -N -d $p1 < '$p2'");
+                    $this->log($res);
                 }
             }
         }
+    }
+    
+    private function log($str)
+    {
+        if (PHP_SAPI !== 'cli') {
+            return;
+        }
+        echo $str . "\n";
     }
 
     private function assertDir($path)
