@@ -11,15 +11,15 @@ class Patcher implements Flushable
 {
     public static function flush()
     {
-        $this->log('Running vendor-code-patcher');
+        self::log('Running vendor-code-patcher');
         $vendorPath = str_replace('//', '/', BASE_PATH . '/vendor');
         $patchesPath = str_replace('//', '/', BASE_PATH . '/_vendor_patches');
         foreach (scandir($patchesPath) as $account) {
-            if (!$this->assertDir("$patchesPath/$account")) {
+            if (!self::assertDir("$patchesPath/$account")) {
                 continue;
             }
             foreach (scandir("$patchesPath/$account") as $module) {
-                if (!$this->assertDir("$patchesPath/$account/$module")) {
+                if (!self::assertDir("$patchesPath/$account/$module")) {
                     continue;
                 }
                 foreach (scandir("$patchesPath/$account/$module") as $patch) {
@@ -29,13 +29,13 @@ class Patcher implements Flushable
                     $p1 = "$vendorPath/$account/$module";
                     $p2 = "$patchesPath/$account/$module/$patch";
                     $res = shell_exec("patch -p1 -N -d $p1 < '$p2'");
-                    $this->log($res);
+                    self::log($res);
                 }
             }
         }
     }
     
-    private function log($str)
+    protected static function log($str)
     {
         if (PHP_SAPI !== 'cli') {
             return;
@@ -43,7 +43,7 @@ class Patcher implements Flushable
         echo $str . "\n";
     }
 
-    private function assertDir($path)
+    protected static function assertDir($path)
     {
         return !preg_match('#/\.\.?$#', $path) && is_dir($path);
     }
