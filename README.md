@@ -8,7 +8,7 @@ Put your patches in BASE_PATH . '/_vendor_patches' so they match the modules the
 
 ## Requirements
 
-The webserver you deploy requires the `patch` utility available.  This will be available on the typical debian/ubuntu webserver.
+The webserver you are deploying to requires the `patch` utility available.  This will be available on the typical debian/ubuntu webserver.
 
 ## Generating .patch files
 
@@ -26,10 +26,8 @@ git format-patch -1 [sha]
 This will generate a .patch file - copy this to correct directory in `_vendor_patches`
 
 
-## Applying the patch
+## Applying patches
 
-Login in to the CMS as admin
+Patches are automatically applied on ?flush=1 - this will happen as part of deployment
 
-/dev/tasks/VendorCodePatchTask
-
-In the future, functionality could be changed to be flushable and run on ?flush, so that it happens as part of deployment
+The vendor-code-patcher will run on every flush, however it will only apply the patches on the first flush if the .patch file makes sense
