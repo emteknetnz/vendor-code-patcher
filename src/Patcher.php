@@ -47,12 +47,12 @@ class Patcher implements Flushable
                     continue;
                 }
                 foreach (scandir("$patchesPath/$account/$module") as $patch) {
-                    if (pathinfo("$patchesPath/$account/$module/$patch", PATHINFO_EXTENSION) !== '.patch') {
+                    if (pathinfo("$patchesPath/$account/$module/$patch", PATHINFO_EXTENSION) !== 'patch') {
                         continue;
                     }
                     $p1 = "$vendorPath/$account/$module";
                     $p2 = "$patchesPath/$account/$module/$patch";
-                    $res = shell_exec("patch -p1 -N -l -c -d $p1 < '$p2'");
+                    $res = shell_exec("patch -p1 -N -l -d $p1 < '$p2'");
                     self::log($res);
                 }
             }
