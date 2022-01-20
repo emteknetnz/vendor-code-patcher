@@ -47,16 +47,22 @@ class Patcher implements Flushable
                     continue;
                 }
                 foreach (scandir("$patchesPath/$account/$module") as $patch) {
-                    if (pathinfo("$patchesPath/$account/$module/$patch", PATHINFO_EXTENSION) !== 'patch') {
-                        continue;
+                    $vpp = "$patchesPath/$account/$module/$patch";
+                    if (pathinfo($vpp, PATHINFO_EXTENSION) === 'patch') {
+                        $vp = "$vendorPath/$account/$module";
+                        $res = shell_exec("patch -p1 -l -r - -d $vp < '$vpp'");
+                        self::log($res ?: "Attempting to apply patch $vpp returned no output");
+                    } else {
+                        self::log("$vpp is not a .patch file");
                     }
-                    $p1 = "$vendorPath/$account/$module";
-                    $p2 = "$patchesPath/$account/$module/$patch";
-                    $res = shell_exec("patch -p1 -l -r - -d $p1 < '$p2'");
-                    self::log($res ?: "Attempting to patch $account/$module/$patch returned no output");
+                    if (!file_exists("$patchedPath/$account/$module")) {
+                        mkdir("$patchedPath/$account/$module");
+                    }
+                    rename("$patchesPath/$account/$module/$patch", "$patchedPath/$account/$module/$patch");
                 }
+                rmdir("$patchesPath/$account/$module");
             }
-            rename("$patchesPath/$account", "$patchedPath/$account");
+            rmdir("$patchesPath/$account");
         }
     }
     
