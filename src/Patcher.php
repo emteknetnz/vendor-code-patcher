@@ -33,7 +33,7 @@ class Patcher implements Flushable
                 continue;
             }
             if ($first) {
-                self::log('Running vendor-code-patcher');
+                self::log("\nRunning vendor-code-patcher");
                 if (!file_exists($patchedPath)) {
                     mkdir($patchedPath);
                 }
@@ -52,7 +52,7 @@ class Patcher implements Flushable
                     }
                     $p1 = "$vendorPath/$account/$module";
                     $p2 = "$patchesPath/$account/$module/$patch";
-                    $res = shell_exec("patch -p1 -N -l -d $p1 < '$p2'");
+                    $res = shell_exec("patch -p1 -l -r - -d $p1 < '$p2'");
                     self::log($res ?: "Attempting to patch $account/$module/$patch returned no output");
                 }
             }
