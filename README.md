@@ -54,3 +54,10 @@ Patch files are then moved to [project_root]/_vendor_patches/_patched so they wo
 You may have issues applying patches to generated bundle.js type of files due to minor differences when your local git checks them out
 
 If you're experiencing issues, manually replacing your local copy of bundle.js with a copy pasted raw version from GitHub should resolve any issues.
+
+
+## Testing patches on local project
+
+To apply a patch to the local project to ensure the patch file is valid
+
+patch -p1 -l -r - -B /tmp/ -d vendor/silverstripe/framework < '/home/<username>/path/to/_vendor_patches/silverstripe/framework/0001.my-patch'
