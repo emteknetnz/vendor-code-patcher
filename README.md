@@ -60,4 +60,4 @@ If you're experiencing issues, manually replacing your local copy of bundle.js w
 
 To apply a patch to the local project to ensure the patch file is valid
 
-`patch -p1 -l -r - -B /tmp/ -d vendor/silverstripe/framework < '/home/<username>/path/to/_vendor_patches/silverstripe/framework/0001.my-patch'`
+`patch -p1 -l -r - -B /tmp/ -d vendor/silverstripe/framework < '_vendor_patches/silverstripe/framework/0001.my-patch'`
