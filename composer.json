@@ -3,7 +3,7 @@
     "description": "Vendor code patcher",
     "type": "silverstripe-vendormodule",
     "require": {
-        "silverstripe/framework": "^4.9"
+        "silverstripe/framework": "^4.9 || ^5"
     },
     "license": "MIT",
     "autoload": {
