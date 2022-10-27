@@ -10,7 +10,7 @@ Put your patches in BASE_PATH . '/_vendor_patches' so they match the modules the
 
 The webserver you are deploying to requires the `patch` utility available.  This will be available on the typical debian/ubuntu webserver.
 
-## Generating .patch files from GitHub pull-requests using wget (recommneded method)
+## Generating .patch files from GitHub pull-requests using wget (recommended method)
 
 Simply suffix .diff to the pull-request url to get the target url, for instance
 
